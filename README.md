@@ -34,8 +34,8 @@ users-auth restfull | graphql api-gateway for comments-app
 
 ```bash
 # run rabbitmq container on port:5672 (web: http://localhost:15672 (guest:guest))
-$ docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
-$ docker ps
+docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
+docker ps
 ```
 
 ```bash
