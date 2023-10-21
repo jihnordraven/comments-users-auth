@@ -24,9 +24,43 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+users-auth restfull | graphql api-gateway for comments-app
+
+## Prerequirements for local dev
+
+1. Needs to have docker desktop installed
+2. Follow next scripts to launch pg & rmq instances locally
+
+## Launch rabbitmq & postgres with docker
+
+````bash
+# run rabbitmq container on port:5672 (visual interface on port:15672 | go http://localhost:15672 (guest:guest))
+$ docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
+$ docker ps
+
+```bash
+# run postgres container on port:5432 (connect to database: "psql postgresql://guest:guest@localhost:5432")
+$ docker run -d --name postgres -p 5432:5432 -e POSTGRES_USER=user -e POSTGRES_PASSWORD=user postgresql
+$ docker ps
+````
+
+```bash
+# to stop or delete these containers you can follow:
+$ docker stop -container_name-
+$ docker rm -container_name-
+$ docker rmi -container_name-
+```
+
+## Note
+
+Local environment are listed in .local.env file
 
 ## Installation
+
+```bash
+# If you dont have yarn on your machine yet
+$ npm install -g yarn
+```
 
 ```bash
 $ yarn install
@@ -39,11 +73,15 @@ $ yarn install
 $ yarn run start
 
 # watch mode
-$ yarn run start:dev
+$ yarn run dev
 
 # production mode
-$ yarn run start:prod
+$ yarn run prod
 ```
+
+## Swagger UI
+
+After you see success logs in your terminal, you can follow http://localhost:4200/api/v1/swagger to find out RESTFull API
 
 ## Test
 
@@ -58,15 +96,9 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+-   Author - Anton Deulia
 
 ## License
 
