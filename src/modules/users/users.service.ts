@@ -15,7 +15,7 @@ export class UsersService {
 
 		if (user.isBlocked) throw new ForbiddenException('Account has been blocked')
 
-		const isValidPassw: boolean = await compare(user.hashPassw, passw)
+		const isValidPassw: boolean = await compare(passw, user.hashPassw)
 		if (!isValidPassw) return null
 
 		return user
