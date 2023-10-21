@@ -2,12 +2,17 @@ import { UsersRepo } from '@users/users.repo'
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 import { RegisterCommand } from './register.command'
 import { User } from '@prisma/client'
-import { ConflictException, HttpStatus } from '@nestjs/common'
+import { ConflictException, HttpStatus, Inject } from '@nestjs/common'
 import { hash } from 'bcrypt'
+import { MAILER_SERVICE } from '@constants'
+import { ClientProxy } from '@nestjs/microservices'
 
 @CommandHandler(RegisterCommand)
 export class RegisterHandler implements ICommandHandler<RegisterCommand> {
-	constructor(protected readonly usersRepo: UsersRepo) {}
+	constructor(
+		@Inject(MAILER_SERVICE) private readonly mailerClient: ClientProxy,
+		protected readonly usersRepo: UsersRepo
+	) {}
 
 	public async execute({ input }: RegisterCommand): Promise<any> {
 		const { email, login, passw } = input
@@ -33,5 +38,7 @@ export class RegisterHandler implements ICommandHandler<RegisterCommand> {
 		const hashPassw: string = await hash(passw, 8)
 
 		await this.usersRepo.create({ email, login, hashPassw })
+
+		this.mailerClient.emit('user-created', email)
 	}
 }

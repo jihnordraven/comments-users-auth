@@ -16,4 +16,4 @@ spec:
         spec:
             containers:
                 - name: users-auth-container
-                  image: jihnordraven/users-auth:latest
+                  image: jihnordraven/comments-users-auth:latest

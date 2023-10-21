@@ -10,9 +10,14 @@ import { STRATEGIES } from './guards-handlers/strategies'
 import { APP_GUARD } from '@nestjs/core'
 import { GUARDS } from '@guards'
 
+const isLocal: boolean = true
+
 @Module({
 	imports: [
-		ConfigModule.forRoot({ isGlobal: true }),
+		ConfigModule.forRoot({
+			isGlobal: true,
+			envFilePath: '.local.env'
+		}),
 		CacheModule.register({
 			isGlobal: true,
 			store: memoryStore

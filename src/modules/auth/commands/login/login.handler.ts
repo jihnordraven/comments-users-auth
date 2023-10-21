@@ -11,13 +11,6 @@ export interface ITokens {
 
 @CommandHandler(LoginCommand)
 export class LoginHandler implements ICommandHandler<LoginCommand> {
-	private readonly AccessSecret: string = this.config.getOrThrow('JWT_ACCESS_SECRET')
-	private readonly AccessExpires: string = this.config.getOrThrow('JWT_ACCESS_EXPIRES')
-
-	private readonly RefreshSecret: string = this.config.getOrThrow('JWT_REFRESH_SECRET')
-	private readonly RefreshExpires: string =
-		this.config.getOrThrow('JWT_REFRESH_EXPIRES')
-
 	constructor(
 		protected readonly config: ConfigService,
 		protected readonly sessionsRepo: SessionsRepo,
@@ -33,14 +26,21 @@ export class LoginHandler implements ICommandHandler<LoginCommand> {
 			userAgent
 		})
 
+		const accessSecret: string = this.config.getOrThrow<string>('JWT_ACCESS_SECRET')
+		const accessExpires: number = this.config.getOrThrow<number>('JWT_ACCESS_EXPIRES')
+
+		const refreshSecret: string = this.config.getOrThrow<string>('JWT_REFRESH_SECRET')
+		const refreshExpires: number =
+			this.config.getOrThrow<number>('JWT_REFRESH_EXPIRES')
+
 		const accessToken: string = this.jwt.sign(
 			{ userId },
-			{ secret: this.AccessSecret, expiresIn: this.AccessExpires }
+			{ secret: accessSecret, expiresIn: +accessExpires }
 		)
 
 		const refreshToken: string = this.jwt.sign(
 			{ userId, sessionId },
-			{ secret: this.RefreshSecret, expiresIn: this.RefreshExpires }
+			{ secret: refreshSecret, expiresIn: +refreshExpires }
 		)
 
 		return { accessToken, refreshToken }

@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_BUILD_NAME = "jihnordraven/users-auth:latest"
+        DOCKER_BUILD_NAME = "jihnordraven/comments-users-auth:latest"
     }
 
     stages {

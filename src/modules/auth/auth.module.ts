@@ -5,9 +5,29 @@ import { UsersModule } from '@users/users.module'
 import { SessionsModule } from '@sessions/sessions.module'
 import { AH } from './commands'
 import { JwtModule } from '@nestjs/jwt'
+import { ClientsModule, Transport } from '@nestjs/microservices'
+import { ConfigService } from '@nestjs/config'
 
 @Module({
-	imports: [CqrsModule, JwtModule, UsersModule, SessionsModule],
+	imports: [
+		CqrsModule,
+		JwtModule,
+		ClientsModule.registerAsync([
+			{
+				name: 'MAILER_SERVICE',
+				useFactory: (config: ConfigService) => ({
+					transport: Transport.RMQ,
+					options: {
+						urls: [config.getOrThrow<string>('RMQ_HOST')],
+						queue: config.getOrThrow<string>('RMQ_QUEUE')
+					}
+				}),
+				inject: [ConfigService]
+			}
+		]),
+		UsersModule,
+		SessionsModule
+	],
 	controllers: [AuthController],
 	providers: [...AH]
 })
