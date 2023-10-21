@@ -55,7 +55,7 @@ $ docker rmi -container_name-
 
 There are two ways to launch this application:
 
-# Way №1 ( manually )
+## Way №1 ( manually )
 
 Install dependecies
 
