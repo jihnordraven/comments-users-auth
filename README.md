@@ -53,31 +53,44 @@ $ docker rmi -container_name-
 
 ## Note
 
-Local environment are listed in .local.env file
+There are two ways to launch this application:
 
-## Installation
+# Way №1 ( manually )
 
-```bash
-# If you dont have yarn on your machine yet
-$ sudo npm install -g yarn
-```
+Install dependecies
 
 ```bash
+# If you don't have yarn on your machine yet
+$ npm install -g yarn
+
 $ yarn install
 ```
 
-## Running the app
+Start application
 
 ```bash
-# development
-$ yarn run start
+$ yarn dev # watch mode
 
-# watch mode
-$ yarn run dev
+$ yarn start # development mode
 
-# production mode
-$ yarn run prod
+$ yarn debug # debug mode
+
+$ yarn prod # production mode
 ```
+
+Now the application should be available on http://localhost:4200/api/v1
+
+## Way №2 ( with docker )
+
+Build docker image
+
+```bash
+$ docker build -t comments-users-auth:latest .
+
+$ docker start comments-users-auth:latest
+```
+
+Now the application should be available on http://localhsot:4200/api/v1
 
 ## Swagger UI
 
