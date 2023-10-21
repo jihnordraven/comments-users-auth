@@ -26,23 +26,23 @@
 
 users-auth restfull | graphql api-gateway for comments-app
 
-## Prerequirements for local dev
+## Prerequirements for local development
 
-1. Needs to have docker desktop installed
-2. Follow next scripts to launch pg & rmq instances locally
+1. Needs to have docker desktop installed on your machine
 
 ## Launch rabbitmq & postgres with docker
 
-````bash
+```bash
 # run rabbitmq container on port:5672 (visual interface on port:15672 | go http://localhost:15672 (guest:guest))
 $ docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
 $ docker ps
+```
 
 ```bash
 # run postgres container on port:5432 (connect to database: "psql postgresql://guest:guest@localhost:5432")
 $ docker run -d --name postgres -p 5432:5432 -e POSTGRES_USER=user -e POSTGRES_PASSWORD=user postgresql
 $ docker ps
-````
+```
 
 ```bash
 # to stop or delete these containers you can follow:
