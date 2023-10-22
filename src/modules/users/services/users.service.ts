@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common'
-import { UsersRepo } from './repositories/users.repo'
+import { UsersRepo } from '../repositories/users-repo/users.repo'
 import { User } from '@prisma/client'
 import { compare } from 'bcrypt'
 

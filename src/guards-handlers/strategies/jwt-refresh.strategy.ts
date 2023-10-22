@@ -1,13 +1,12 @@
-import { SessionsService } from '@sessions/sessions.service'
+import { SessionsService } from '../../modules/sessions/services/sessions.service'
 import { Injectable, UnauthorizedException } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { PassportStrategy } from '@nestjs/passport'
 import { Session, User } from '@prisma/client'
 import { Request } from 'express'
 import { Strategy } from 'passport-jwt'
-import { UsersRepo } from '@users/repositories/users.repo'
-import { REFRESH_TOKEN } from '@constants'
-import { CONFIG } from 'src/config'
+import { UsersRepo } from '../../modules/users/repositories/users-repo/users.repo'
+import { REFRESH_TOKEN } from '../../utils/constants'
+import { CONFIG } from '../../config'
 
 export type JwtRefreshPayload = {
 	userId: string

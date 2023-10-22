@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common'
-import { AuthController } from './auth.controller'
+import { AuthController } from './controllers/auth.controller'
 import { CqrsModule } from '@nestjs/cqrs'
-import { UsersModule } from '@users/users.module'
-import { SessionsModule } from '@sessions/sessions.module'
 import { AH } from './commands'
 import { JwtModule } from '@nestjs/jwt'
 import { ClientsModule, Transport } from '@nestjs/microservices'
 import { ConfigService } from '@nestjs/config'
+import { MAILER_SERVICE } from '../../utils/constants'
+import { UsersModule } from '../users/users.module'
+import { SessionsModule } from '../sessions/sessions.module'
 
 @Module({
 	imports: [
@@ -14,7 +15,7 @@ import { ConfigService } from '@nestjs/config'
 		JwtModule,
 		ClientsModule.registerAsync([
 			{
-				name: 'MAILER_SERVICE',
+				name: MAILER_SERVICE,
 				useFactory: (config: ConfigService) => ({
 					transport: Transport.RMQ,
 					options: {

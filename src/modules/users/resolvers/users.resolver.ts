@@ -1,11 +1,11 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { MyObjectType, UserObjectType } from './users.entity'
+import { MyObjectType, UserObjectType } from '../users.entity'
 import { User } from '@prisma/client'
-import { UsersQueryRepo } from './repositories/users-query.repo'
-import { UsersRepo } from './repositories/users.repo'
+import { UsersQueryRepo } from '../repositories/users-query-repo/users-query.repo'
+import { UsersRepo } from '../repositories/users-repo/users.repo'
 import { UseGuards } from '@nestjs/common'
-import { GUARDS } from '@guards'
-import { Public } from '@decorators'
+import { GUARDS } from '../../../guards-handlers/guards'
+import { Public } from '../../../utils/decorators'
 
 @Public()
 @UseGuards(GUARDS.JwtGqlGuard)

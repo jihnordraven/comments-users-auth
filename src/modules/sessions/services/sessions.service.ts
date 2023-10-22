@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { SessionsRepo } from './sessions.repo'
+import { SessionsRepo } from '../repositories/sessions.repo'
 import { Session } from '@prisma/client'
 
 @Injectable()

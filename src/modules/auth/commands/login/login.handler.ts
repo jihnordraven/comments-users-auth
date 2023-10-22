@@ -1,9 +1,9 @@
 import { JwtService } from '@nestjs/jwt'
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 import { LoginCommand } from './login.command'
-import { SessionsRepo } from '@sessions/sessions.repo'
+import { SessionsRepo } from '../../../sessions/repositories/sessions.repo'
 import { ConfigService } from '@nestjs/config'
-import { CONFIG } from 'src/config'
+import { CONFIG } from '../../../../config'
 
 export interface ITokens {
 	accessToken: string

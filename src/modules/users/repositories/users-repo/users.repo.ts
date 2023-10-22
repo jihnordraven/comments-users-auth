@@ -8,8 +8,8 @@ import {
 } from '@nestjs/common'
 import { User } from '@prisma/client'
 import { Cache } from 'cache-manager'
-import { PrismaService } from 'prisma/prisma.service'
-import { CleanUserCache, CreateUser, UpdateUser } from '../core/types'
+import { PrismaService } from '../../../../../prisma/prisma.service'
+import { CreateUser, UpdateUser } from '../../core/types'
 import { red } from 'colorette'
 
 @Injectable()

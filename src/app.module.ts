@@ -2,13 +2,13 @@ import { CacheModule } from '@nestjs/cache-manager'
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { memoryStore } from 'cache-manager'
-import { PrismaModule } from 'prisma/prisma.module'
-import { AuthModule } from '@auth/auth.module'
-import { UsersModule } from '@users/users.module'
-import { SessionsModule } from '@sessions/sessions.module'
+import { PrismaModule } from '../prisma/prisma.module'
+import { AuthModule } from './modules/auth/auth.module'
+import { UsersModule } from './modules/users/users.module'
 import { STRATEGIES } from './guards-handlers/strategies'
+import { GUARDS } from './guards-handlers/guards'
 import { APP_GUARD } from '@nestjs/core'
-import { GUARDS } from '@guards'
+import { SessionsModule } from './modules/sessions/sessions.module'
 
 @Module({
 	imports: [

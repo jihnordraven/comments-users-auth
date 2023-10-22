@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsString, Matches } from 'class-validator'
-import { EmailPattern, LoginPattern, PasswPattern } from 'src/utils/patterns'
+import { EmailPattern, LoginPattern, PasswPattern } from '../../../../utils/patterns'
 
 export class RegisterDto {
 	@IsNotEmpty()

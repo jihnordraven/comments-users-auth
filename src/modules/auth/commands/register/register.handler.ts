@@ -1,10 +1,10 @@
-import { UsersRepo } from '@users/repositories/users.repo'
+import { UsersRepo } from '../../../users/repositories//users-repo/users.repo'
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 import { RegisterCommand } from './register.command'
 import { User } from '@prisma/client'
 import { ConflictException, HttpStatus, Inject } from '@nestjs/common'
 import { hash } from 'bcrypt'
-import { MAILER_SERVICE } from '@constants'
+import { MAILER_SERVICE } from '../../../../utils/constants'
 import { ClientProxy } from '@nestjs/microservices'
 
 @CommandHandler(RegisterCommand)

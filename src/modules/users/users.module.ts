@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common'
-import { UsersService } from './users.service'
-import { UsersResolver } from './users.resolver'
-import { UsersRepo } from './repositories/users.repo'
+import { UsersService } from './services/users.service'
+import { UsersResolver } from './resolvers/users.resolver'
+import { UsersRepo } from './repositories/users-repo/users.repo'
 import { GraphQLModule } from '@nestjs/graphql'
 import { join } from 'path'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
-import { UsersQueryRepo } from './repositories/users-query.repo'
+import { UsersQueryRepo } from './repositories/users-query-repo/users-query.repo'
 
 @Module({
 	imports: [

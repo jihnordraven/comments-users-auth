@@ -1,10 +1,10 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
 import { ExtractJwt, Strategy } from 'passport-jwt'
-import { CONFIG } from 'src/config'
+import { CONFIG } from '../../config'
 import { JwtAccessPayload } from './jwt-access.strategy'
 import { User } from '@prisma/client'
-import { UsersRepo } from '@users/repositories/users.repo'
+import { UsersRepo } from '../../modules/users/repositories/users-repo/users.repo'
 
 @Injectable()
 export class JwtGqlStrategy extends PassportStrategy(Strategy, 'jwt-gql') {

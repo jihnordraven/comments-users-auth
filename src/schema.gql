@@ -12,13 +12,7 @@ type Mutation {
   update(email: String!, login: String!, passw: String!): UserObjectType!
 }
 
-type MyObjectType {
-  string1: String!
-  string2: String!
-}
-
 type Query {
-  test: MyObjectType!
   user(id: String!): UserObjectType!
 }
 

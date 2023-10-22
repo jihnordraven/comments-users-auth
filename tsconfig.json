@@ -16,16 +16,6 @@
 		"noImplicitAny": false,
 		"strictBindCallApply": false,
 		"forceConsistentCasingInFileNames": false,
-		"noFallthroughCasesInSwitch": false,
-		"paths": {
-			"@users/*": ["src/modules/users/*"],
-			"@sessions/*": ["src/modules/sessions/*"],
-			"@auth/*": ["src/modules/auth/*"],
-			"@patterns": ["src/utils/patterns"],
-			"@decorators": ["src/utils/decorators"],
-			"@constants": ["src/utils/constants"],
-			"@guards": ["src/guards-handlers/guards"],
-			"@strategies/*": ["src/guards-handlers/strategies/*"]
-		}
+		"noFallthroughCasesInSwitch": false
 	}
 }

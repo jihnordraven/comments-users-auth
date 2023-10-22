@@ -1,19 +1,16 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { PassportStrategy } from '@nestjs/passport'
 import { User } from '@prisma/client'
 import { ExtractJwt, Strategy } from 'passport-jwt'
-import { UsersRepo } from '@users/repositories/users.repo'
+import { UsersRepo } from '../../modules/users/repositories/users-repo/users.repo'
 import { Request } from 'express'
-import { CONFIG } from 'src/config'
+import { CONFIG } from '../../config'
 
 export type JwtAccessPayload = {
 	userId: string
 	iat: number
 	exp: number
 }
-
-const ExtractJwtFromHeaders = (req: Request): string => req.headers.authorization
 
 @Injectable()
 export class JwtAccessStrategy extends PassportStrategy(Strategy, 'jwt-access') {
