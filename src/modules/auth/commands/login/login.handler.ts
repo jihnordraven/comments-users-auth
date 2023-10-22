@@ -31,15 +31,19 @@ export class LoginHandler implements ICommandHandler<LoginCommand> {
 		const refreshExpires: number =
 			this.config.getOrThrow<number>('JWT_REFRESH_EXPIRES')
 
-		const accessToken: string = this.jwt.sign(
-			{ userId },
-			{ secret: CONFIG.JWT_ACCESS_SECRET, expiresIn: +accessExpires }
-		)
+		const accessToken: string =
+			'Bearer ' +
+			this.jwt.sign(
+				{ userId },
+				{ secret: CONFIG.JWT_ACCESS_SECRET, expiresIn: +accessExpires }
+			)
 
-		const refreshToken: string = this.jwt.sign(
-			{ userId, sessionId },
-			{ secret: CONFIG.JWT_REFRESH_SECRET, expiresIn: +refreshExpires }
-		)
+		const refreshToken: string =
+			'Bearer ' +
+			this.jwt.sign(
+				{ userId, sessionId },
+				{ secret: CONFIG.JWT_REFRESH_SECRET, expiresIn: +refreshExpires }
+			)
 
 		return { accessToken, refreshToken }
 	}

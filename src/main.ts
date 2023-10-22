@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config'
 import { Logger, RequestMethod, ValidationPipe } from '@nestjs/common'
 import { blue, red } from 'colorette'
 import * as cookieParser from 'cookie-parser'
+import { swaggerSetup } from './swagger'
 
 const logger: Logger = new Logger('bootstrap')
 
@@ -32,6 +33,8 @@ const bootstrap = async (): Promise<void> => {
 	const PORT: number = config.getOrThrow<number>('PORT')
 	const HOST: string = config.getOrThrow<string>('HOST')
 	const MODE: string = config.getOrThrow<string>('MODE')
+
+	if (MODE !== 'production') swaggerSetup(app)
 
 	await app
 		.listen(PORT)

@@ -9,6 +9,7 @@ import { STRATEGIES } from './guards-handlers/strategies'
 import { GUARDS } from './guards-handlers/guards'
 import { APP_GUARD } from '@nestjs/core'
 import { SessionsModule } from './modules/sessions/sessions.module'
+import { AppController } from './app.controller'
 
 @Module({
 	imports: [
@@ -25,6 +26,7 @@ import { SessionsModule } from './modules/sessions/sessions.module'
 		UsersModule,
 		SessionsModule
 	],
+	controllers: [AppController],
 	providers: [...STRATEGIES, { provide: APP_GUARD, useClass: GUARDS.JwtAccessGuard }]
 })
 export class AppModule {}

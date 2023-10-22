@@ -13,25 +13,30 @@ import {
 import { CurrentUser, Public, UserAgent } from '../../../utils/decorators'
 import { CommandBus } from '@nestjs/cqrs'
 import { AC } from '../commands'
-import { RegisterDto } from '../core/dtos'
+import { SignUpDto } from '../core/dtos'
 import { Request, Response } from 'express'
 import { User } from '@prisma/client'
 import { ITokens } from '../commands/login/login.handler'
 import { REFRESH_TOKEN } from '../../../utils/constants'
 import { GUARDS } from '../../../guards-handlers/guards'
 import { JwtRefreshPayload } from '../../../guards-handlers/strategies/jwt-refresh.strategy'
+import { ApiTags } from '@nestjs/swagger'
+import { AUTH_SWAGGER } from 'src/swagger'
 
+@ApiTags('Auth Controller')
 @Controller('auth')
 export class AuthController {
 	constructor(private readonly commandBus: CommandBus) {}
 
+	@AUTH_SWAGGER.SwaggerToSignUp()
 	@Public()
 	@Post('signUp')
 	@HttpCode(HttpStatus.NO_CONTENT)
-	public async signUp(@Body() dto: RegisterDto): Promise<void> {
+	public async signUp(@Body() dto: SignUpDto): Promise<void> {
 		await this.commandBus.execute(new AC.RegisterCommand(dto))
 	}
 
+	@AUTH_SWAGGER.SwaggerToSignIn()
 	@Public()
 	@Post('signIn')
 	@HttpCode(HttpStatus.OK)
@@ -50,6 +55,7 @@ export class AuthController {
 		this.setTokensToResponse(tokens, res)
 	}
 
+	@AUTH_SWAGGER.SwaggerToRefresh()
 	@Public()
 	@Post('refresh')
 	@HttpCode(HttpStatus.OK)
@@ -70,6 +76,7 @@ export class AuthController {
 		this.setTokensToResponse(tokens, res)
 	}
 
+	@AUTH_SWAGGER.SwaggerToLogout()
 	@Public()
 	@Post('logout')
 	@UseGuards(GUARDS.JwtRefreshGuard)
@@ -83,7 +90,9 @@ export class AuthController {
 		res.clearCookie(REFRESH_TOKEN).send()
 	}
 
+	@AUTH_SWAGGER.SwaggerToGetMe()
 	@Get('me')
+	@HttpCode(HttpStatus.OK)
 	public async me(@CurrentUser() user: User): Promise<User> {
 		return user
 	}
