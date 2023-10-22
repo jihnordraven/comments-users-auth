@@ -34,7 +34,7 @@ const bootstrap = async (): Promise<void> => {
 	const HOST: string = config.getOrThrow<string>('HOST')
 	const MODE: string = config.getOrThrow<string>('MODE')
 
-	if (MODE !== 'production') swaggerSetup(app)
+	if (MODE !== 'prod') swaggerSetup(app)
 
 	await app
 		.listen(PORT)
