@@ -18,7 +18,9 @@ export type JwtRefreshPayload = {
 const ExtractJwtFromCookies = (req: Request): string => {
 	let token: string = ''
 	if (req && req.cookies) {
-		token = req.cookies[REFRESH_TOKEN]
+		const authorization: string = req.cookies[REFRESH_TOKEN]
+
+		token = authorization.split(' ')[1]
 	}
 	return token
 }
