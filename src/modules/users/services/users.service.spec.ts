@@ -22,4 +22,8 @@ describe('UsersService', (): void => {
 	test('should be defined', (): void => {
 		expect(usersService).toBeDefined()
 	})
+
+	describe('validate', (): void => {
+		test("should return null if there aren't loginOrEmail or passw", (): void => {})
+	})
 })
