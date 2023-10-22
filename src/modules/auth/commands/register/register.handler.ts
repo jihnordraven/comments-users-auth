@@ -1,4 +1,4 @@
-import { UsersRepo } from '@users/users.repo'
+import { UsersRepo } from '@users/repositories/users.repo'
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 import { RegisterCommand } from './register.command'
 import { User } from '@prisma/client'

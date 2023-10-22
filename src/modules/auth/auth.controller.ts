@@ -1,6 +1,7 @@
 import {
 	Body,
 	Controller,
+	Get,
 	HttpCode,
 	HttpStatus,
 	Ip,
@@ -9,7 +10,7 @@ import {
 	Res,
 	UseGuards
 } from '@nestjs/common'
-import { Public, UserAgent } from '@decorators'
+import { CurrentUser, Public, UserAgent } from '@decorators'
 import { CommandBus } from '@nestjs/cqrs'
 import { AC } from './commands'
 import { RegisterDto } from './core/dtos'
@@ -19,18 +20,21 @@ import { ITokens } from './commands/login/login.handler'
 import { REFRESH_TOKEN } from '@constants'
 import { GUARDS } from '@guards'
 import { JwtRefreshPayload } from '../../guards-handlers/strategies/jwt-refresh.strategy'
+import { JwtAccessGuard } from 'src/guards-handlers/guards/jwt-access.guard'
+import { UserResponse } from '@users/core/responses'
 
-@Public()
 @Controller('auth')
 export class AuthController {
 	constructor(private readonly commandBus: CommandBus) {}
 
+	@Public()
 	@Post('signUp')
 	@HttpCode(HttpStatus.NO_CONTENT)
 	public async signUp(@Body() dto: RegisterDto): Promise<void> {
 		await this.commandBus.execute(new AC.RegisterCommand(dto))
 	}
 
+	@Public()
 	@Post('signIn')
 	@HttpCode(HttpStatus.OK)
 	@UseGuards(GUARDS.LocalGuard)
@@ -48,6 +52,7 @@ export class AuthController {
 		this.setTokensToResponse(tokens, res)
 	}
 
+	@Public()
 	@Post('refresh')
 	@HttpCode(HttpStatus.OK)
 	@UseGuards(GUARDS.JwtRefreshGuard)
@@ -67,6 +72,7 @@ export class AuthController {
 		this.setTokensToResponse(tokens, res)
 	}
 
+	@Public()
 	@Post('logout')
 	@UseGuards(GUARDS.JwtRefreshGuard)
 	public async logout(
@@ -77,6 +83,11 @@ export class AuthController {
 
 		await this.commandBus.execute(new AC.LogoutCommand({ sessionId }))
 		res.clearCookie(REFRESH_TOKEN).send()
+	}
+
+	@Get('me')
+	public async me(@CurrentUser() user: User): Promise<User> {
+		return user
 	}
 
 	// Helpers

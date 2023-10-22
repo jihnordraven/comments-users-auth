@@ -5,8 +5,9 @@ import { PassportStrategy } from '@nestjs/passport'
 import { Session, User } from '@prisma/client'
 import { Request } from 'express'
 import { Strategy } from 'passport-jwt'
-import { UsersRepo } from '@users/users.repo'
+import { UsersRepo } from '@users/repositories/users.repo'
 import { REFRESH_TOKEN } from '@constants'
+import { CONFIG } from 'src/config'
 
 export type JwtRefreshPayload = {
 	userId: string
@@ -26,13 +27,12 @@ const ExtractJwtFromCookies = (req: Request): string => {
 @Injectable()
 export class JwtRefreshStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
 	constructor(
-		private readonly config: ConfigService,
 		private readonly sessionsService: SessionsService,
 		private readonly usersRepo: UsersRepo
 	) {
 		super({
 			jwtFromRequest: (req: Request) => ExtractJwtFromCookies(req),
-			secretOrKey: config.getOrThrow<string>('JWT_REFRESH_SECRET'),
+			secretOrKey: CONFIG.JWT_REFRESH_SECRET,
 			ignoreExpiration: false
 		})
 	}

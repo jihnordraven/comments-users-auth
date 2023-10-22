@@ -1,9 +1,15 @@
 import { CACHE_MANAGER } from '@nestjs/cache-manager'
-import { Inject, Injectable, InternalServerErrorException, Logger } from '@nestjs/common'
+import {
+	Inject,
+	Injectable,
+	InternalServerErrorException,
+	Logger,
+	UnauthorizedException
+} from '@nestjs/common'
 import { User } from '@prisma/client'
 import { Cache } from 'cache-manager'
 import { PrismaService } from 'prisma/prisma.service'
-import { CreateUser } from './core/types'
+import { CleanUserCache, CreateUser, UpdateUser } from '../core/types'
 import { red } from 'colorette'
 
 @Injectable()
@@ -80,5 +86,37 @@ export class UsersRepo {
 			return user
 		}
 		return user
+	}
+
+	public async update(data: UpdateUser, id: string): Promise<User> {
+		const user: User | null = await this.findById(id)
+		if (!user) throw new UnauthorizedException()
+
+		await this.cleanCache(user)
+
+		const updatedUser = await this.prisma.user.update({
+			where: { ...user },
+			data: { ...data }
+		})
+		await this.cache.set(`user-email-${user.email}`, user, 1800)
+
+		return updatedUser
+	}
+
+	public async delete(id: string): Promise<User> {
+		const user: User | null = await this.findById(id)
+		if (!user) throw new UnauthorizedException()
+
+		await this.cleanCache(user)
+
+		return this.prisma.user.delete({ where: { id } })
+	}
+
+	// Helpers
+	private async cleanCache(user: User): Promise<void> {
+		await this.cache.del(`user-emailOrLogin-${user.email}`)
+		await this.cache.del(`user-email-${user.email}`)
+		await this.cache.del(`user-login-${user.login}`)
+		await this.cache.del(`user-id-${user.id}`)
 	}
 }
