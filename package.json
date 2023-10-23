@@ -6,6 +6,7 @@
 	"private": true,
 	"license": "UNLICENSED",
 	"scripts": {
+		"migrate": "npx prisma format; npx prisma migrate dev",
 		"build": "nest build",
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
 		"start": "nest start",
@@ -55,6 +56,8 @@
 		"date-fns": "^2.30.0",
 		"graphql": "^16.8.1",
 		"passport": "^0.6.0",
+		"passport-github2": "^0.1.12",
+		"passport-google-oauth20": "^2.0.0",
 		"passport-jwt": "^4.0.1",
 		"passport-local": "^1.0.0",
 		"reflect-metadata": "^0.1.13",

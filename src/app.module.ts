@@ -11,6 +11,8 @@ import { APP_GUARD } from '@nestjs/core'
 import { SessionsModule } from './modules/sessions/sessions.module'
 import { AppController } from './app.controller'
 import { redisStore } from 'cache-manager-redis-yet'
+import { GoogleProfilesModule } from './modules/google-profiles/google-profiles.module';
+import { GithubProfilesModule } from './modules/github-profiles/github-profiles.module';
 
 @Module({
 	imports: [
@@ -36,7 +38,9 @@ import { redisStore } from 'cache-manager-redis-yet'
 		PrismaModule,
 		AuthModule,
 		UsersModule,
-		SessionsModule
+		SessionsModule,
+		GoogleProfilesModule,
+		GithubProfilesModule
 	],
 	controllers: [AppController],
 	providers: [...STRATEGIES, { provide: APP_GUARD, useClass: GUARDS.JwtAccessGuard }]

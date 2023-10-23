@@ -8,6 +8,11 @@ import { ConfigService } from '@nestjs/config'
 import { MAILER_SERVICE } from '../../utils/constants'
 import { UsersModule } from '../users/users.module'
 import { SessionsModule } from '../sessions/sessions.module'
+import { GoogleController } from './controllers/google-controller/google.controller'
+import { AuthService } from './services/auth.service'
+import { GoogleProfilesModule } from '../google-profiles/google-profiles.module'
+import { GithubController } from './controllers/github-controller/github.controller'
+import { GithubProfilesModule } from '../github-profiles/github-profiles.module'
 
 @Module({
 	imports: [
@@ -27,9 +32,11 @@ import { SessionsModule } from '../sessions/sessions.module'
 			}
 		]),
 		UsersModule,
-		SessionsModule
+		SessionsModule,
+		GoogleProfilesModule,
+		GithubProfilesModule
 	],
-	controllers: [AuthController],
-	providers: [...AH]
+	controllers: [AuthController, GoogleController, GithubController],
+	providers: [AuthService, ...AH]
 })
 export class AuthModule {}

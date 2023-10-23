@@ -7,6 +7,24 @@ import { LoginHandler } from './login/login.handler'
 import { LogoutCommand } from './logout/logout.command'
 import { LogoutHandler } from './logout/logout.handler'
 
-export const AC = { RegisterCommand, LoginCommand, LogoutCommand }
+import { GoogleLoginCommand } from './google-login/google-login.command'
+import { GoogleLoginHandler } from './google-login/google-login.handler'
 
-export const AH = [RegisterHandler, LoginHandler, LogoutHandler]
+import { GithubLoginCommand } from './github-login/github-login.command'
+import { GithubLoginHandler } from './github-login/github-login.handler'
+
+export const AC = {
+	RegisterCommand,
+	LoginCommand,
+	LogoutCommand,
+	GoogleLoginCommand,
+	GithubLoginCommand
+}
+
+export const AH = [
+	RegisterHandler,
+	LoginHandler,
+	LogoutHandler,
+	GoogleLoginHandler,
+	GithubLoginHandler
+]
