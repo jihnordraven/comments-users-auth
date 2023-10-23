@@ -28,7 +28,7 @@ const bootstrap = async (): Promise<void> => {
 			'https://www.comments.com'
 		]
 	})
-	app.use(cookieParser)
+	app.use(cookieParser())
 	app.useGlobalPipes(new ValidationPipe())
 
 	const config: ConfigService = app.get<ConfigService>(ConfigService)
