@@ -13,7 +13,7 @@ import { GithubProfilesModule } from '../github-profiles/github-profiles.module'
 	imports: [
 		GraphQLModule.forRoot<ApolloDriverConfig>({
 			driver: ApolloDriver,
-			autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+			typePaths: [join(process.cwd(), 'src/schema.gql')],
 			sortSchema: true
 		}),
 		GoogleProfilesModule,

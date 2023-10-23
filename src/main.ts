@@ -4,11 +4,12 @@ import { AppModule } from './app.module'
 import { ConfigService } from '@nestjs/config'
 import { Logger, RequestMethod, ValidationPipe } from '@nestjs/common'
 import { blue, red } from 'colorette'
-import cookieParser from 'cookie-parser'
 import { swaggerSetup } from './utils/swagger'
 import * as Sentry from '@sentry/node'
 import { SentryFilter } from './utils/errors-handlers'
 import { ProfilingIntegration } from '@sentry/profiling-node'
+import * as cookieParser from 'cookie-parser'
+import cookieParserVercel from 'cookie-parser'
 
 const logger: Logger = new Logger('bootstrap')
 
@@ -38,6 +39,12 @@ const bootstrap = async (): Promise<void> => {
 	const MODE: string = config.getOrThrow<string>('MODE')
 
 	if (MODE !== 'prod') swaggerSetup(app)
+
+	if (MODE === 'staging') {
+		app.use(cookieParserVercel())
+	} else {
+		app.use(cookieParser())
+	}
 
 	Sentry.init({
 		dsn: config.getOrThrow('SENTRY_DSN'),
