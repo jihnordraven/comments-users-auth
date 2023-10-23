@@ -8,8 +8,8 @@ import {
 } from '@nestjs/common'
 import { Public } from './utils/decorators'
 import { ConfigService } from '@nestjs/config'
-import { HelloPageTemplate } from 'static/templates'
 import { ApiResponse, ApiTags } from '@nestjs/swagger'
+import { HelloPageTemplate } from '../static/templates'
 
 @Public()
 @ApiTags('Api Controller')
