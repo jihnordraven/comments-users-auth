@@ -21,7 +21,7 @@ import { REFRESH_TOKEN } from '../../../utils/constants'
 import { GUARDS } from '../../../guards-handlers/guards'
 import { JwtRefreshPayload } from '../../../guards-handlers/strategies/jwt-refresh.strategy'
 import { ApiTags } from '@nestjs/swagger'
-import { AUTH_SWAGGER } from '../../../swagger'
+import { AUTH_SWAGGER } from '../../../utils/swagger'
 
 @ApiTags('Auth Controller')
 @Controller('auth')

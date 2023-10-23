@@ -1,6 +1,6 @@
 import { HttpStatus, applyDecorators } from '@nestjs/common'
 import { ApiCookieAuth, ApiOperation, ApiResponse } from '@nestjs/swagger'
-import { REFRESH_TOKEN } from '../../utils/constants'
+import { REFRESH_TOKEN } from '../../../utils/constants'
 
 export const SwaggerToLogout = (): MethodDecorator => {
 	return applyDecorators(

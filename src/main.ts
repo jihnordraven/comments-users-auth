@@ -1,11 +1,14 @@
-import { NestFactory } from '@nestjs/core'
+import { HttpAdapterHost, NestFactory } from '@nestjs/core'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import { AppModule } from './app.module'
 import { ConfigService } from '@nestjs/config'
 import { Logger, RequestMethod, ValidationPipe } from '@nestjs/common'
 import { blue, red } from 'colorette'
 import * as cookieParser from 'cookie-parser'
-import { swaggerSetup } from './swagger'
+import { swaggerSetup } from './utils/swagger'
+import * as Sentry from '@sentry/node'
+import { SentryFilter } from './utils/errors-handlers'
+import { ProfilingIntegration } from '@sentry/profiling-node'
 
 const logger: Logger = new Logger('bootstrap')
 
@@ -35,6 +38,16 @@ const bootstrap = async (): Promise<void> => {
 	const MODE: string = config.getOrThrow<string>('MODE')
 
 	if (MODE !== 'prod') swaggerSetup(app)
+
+	Sentry.init({
+		dsn: config.getOrThrow('SENTRY_DSN'),
+		integrations: [new ProfilingIntegration()],
+		tracesSampleRate: 1.0,
+		profilesSampleRate: 1.0
+	})
+
+	const { httpAdapter } = app.get(HttpAdapterHost)
+	app.useGlobalFilters(new SentryFilter(httpAdapter))
 
 	await app
 		.listen(PORT)

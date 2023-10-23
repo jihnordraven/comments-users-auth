@@ -35,6 +35,8 @@
 		"@nestjs/platform-express": "^10.2.7",
 		"@nestjs/swagger": "^7.1.13",
 		"@prisma/client": "5.2.0",
+		"@sentry/node": "^7.74.1",
+		"@sentry/profiling-node": "^1.2.1",
 		"@types/amqplib": "^0.10.3",
 		"@types/bcrypt": "^5.0.1",
 		"@types/cookie-parser": "^1.4.5",
