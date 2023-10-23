@@ -1,6 +1,6 @@
 import { HttpStatus, applyDecorators } from '@nestjs/common'
 import { ApiHeader, ApiOperation, ApiResponse } from '@nestjs/swagger'
-import { ACCESS_TOKEN } from '../../utils/constants'
+import { ACCESS_TOKEN } from '../../../utils/constants'
 
 export const SwaggerToGetMe = (): MethodDecorator => {
 	return applyDecorators(

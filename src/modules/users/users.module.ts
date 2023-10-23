@@ -6,6 +6,8 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { join } from 'path'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { UsersQueryRepo } from './repositories/users-query-repo/users-query.repo'
+import { GoogleProfilesModule } from '../google-profiles/google-profiles.module'
+import { GithubProfilesModule } from '../github-profiles/github-profiles.module'
 
 @Module({
 	imports: [
@@ -13,7 +15,9 @@ import { UsersQueryRepo } from './repositories/users-query-repo/users-query.repo
 			driver: ApolloDriver,
 			autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
 			sortSchema: true
-		})
+		}),
+		GoogleProfilesModule,
+		GithubProfilesModule
 	],
 	providers: [UsersResolver, UsersService, UsersRepo, UsersQueryRepo],
 	exports: [UsersService, UsersRepo]

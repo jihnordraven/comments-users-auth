@@ -1,6 +1,6 @@
 import { HttpStatus, applyDecorators } from '@nestjs/common'
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger'
-import { SignUpDto } from '../../modules/auth/core/dtos'
+import { SignUpDto } from '../../../modules/auth/core/dtos'
 
 export const SwaggerToSignUp = (): MethodDecorator => {
 	return applyDecorators(
