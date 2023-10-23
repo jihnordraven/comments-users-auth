@@ -8,36 +8,48 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Mutation {
-  deleteUser: UserObjectType!
-  updateUser(input: UpdateUserInput!): UserObjectType!
+	deleteUser: UserObjectType!
+	updateUser(input: UpdateUserInput!): UserObjectType!
 }
 
 type Query {
-  user(id: String!): UserObjectType!
+	user(id: String!): UserObjectType!
 }
 
 input UpdateUserInput {
-  email: String!
-  login: String!
-  passw: String!
+	email: String!
+	login: String!
+	passw: String!
 }
 
 type UserObjectType {
-  """user created date"""
-  createdAt: DateTime!
+	"""
+	user created date
+	"""
+	createdAt: DateTime!
 
-  """unique login"""
-  email: String!
+	"""
+	unique login
+	"""
+	email: String!
 
-  """unique user id"""
-  id: Int!
+	"""
+	unique user id
+	"""
+	id: Int!
 
-  """is user blocked"""
-  isBlocked: Boolean!
+	"""
+	is user blocked
+	"""
+	isBlocked: Boolean!
 
-  """unique email"""
-  login: String!
+	"""
+	unique email
+	"""
+	login: String!
 
-  """user last updated date"""
-  updatedAt: DateTime!
+	"""
+	user last updated date
+	"""
+	updatedAt: DateTime!
 }
