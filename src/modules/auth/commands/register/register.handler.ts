@@ -14,7 +14,7 @@ export class RegisterHandler implements ICommandHandler<RegisterCommand> {
 		protected readonly usersRepo: UsersRepo
 	) {}
 
-	public async execute({ input }: RegisterCommand): Promise<any> {
+	public async execute({ input }: RegisterCommand): Promise<Partial<User>> {
 		const { email, login, passw } = input
 
 		const isUserEmail: User | null = await this.usersRepo.findByEmail(email)
@@ -37,8 +37,14 @@ export class RegisterHandler implements ICommandHandler<RegisterCommand> {
 
 		const hashPassw: string = await hash(passw, 8)
 
-		await this.usersRepo.create({ email, login, hashPassw })
-
 		this.mailerClient.emit('user-created', email)
+
+		const user: Partial<User> = await this.usersRepo.create({
+			email,
+			login,
+			hashPassw
+		})
+
+		return user
 	}
 }

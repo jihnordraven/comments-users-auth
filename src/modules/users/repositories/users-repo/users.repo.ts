@@ -21,10 +21,16 @@ export class UsersRepo {
 		private readonly prisma: PrismaService
 	) {}
 
-	public async create(data: CreateUser): Promise<User> {
-		const user: User | void = await this.prisma.user
+	public async create(data: CreateUser): Promise<Partial<User>> {
+		const user: Partial<User> | void = await this.prisma.user
 			.create({
-				data
+				data,
+				select: {
+					id: true,
+					email: true,
+					login: true,
+					createdAt: true
+				}
 			})
 			.catch((err: string) => this.logger.error(red(err)))
 
