@@ -15,7 +15,7 @@ import { GithubProfilesModule } from '../github-profiles/github-profiles.module'
 			driver: ApolloDriver,
 			typePaths: [join(process.cwd(), 'src/schema.gql')],
 			sortSchema: true,
-			csrfPrevention: true
+			csrfPrevention: false
 		}),
 		GoogleProfilesModule,
 		GithubProfilesModule
