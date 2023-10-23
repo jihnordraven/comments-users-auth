@@ -11,6 +11,7 @@ import { Cache } from 'cache-manager'
 import { PrismaService } from '../../../../../prisma/prisma.service'
 import { CreateUser, UpdateUser } from '../../core/types'
 import { red } from 'colorette'
+import { hash } from 'bcrypt'
 
 @Injectable()
 export class UsersRepo {
@@ -94,7 +95,10 @@ export class UsersRepo {
 		return user
 	}
 
-	public async update(data: UpdateUser, id: string): Promise<User> {
+	public async update(id: string, data: UpdateUser): Promise<User> {
+		let hashPassw: string
+		if (data.passw) hashPassw = await hash(data.passw, 8)
+
 		const user: User | null = await this.findById(id)
 		if (!user) throw new UnauthorizedException()
 
@@ -102,7 +106,11 @@ export class UsersRepo {
 
 		const updatedUser = await this.prisma.user.update({
 			where: { ...user },
-			data: { ...data }
+			data: {
+				email: data.email,
+				login: data.login,
+				hashPassw
+			}
 		})
 		await this.cache.set(`user-email-${user.email}`, user, 1800)
 

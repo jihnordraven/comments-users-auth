@@ -40,7 +40,9 @@ const bootstrap = async (): Promise<void> => {
 		.listen(PORT)
 		.then(() =>
 			logger.log(
-				blue(`Server is listening PORT:${PORT} on HOST:${HOST} with MODE:${MODE}`)
+				blue(
+					`Server is listening PORT:${PORT} on HOST:${HOST} with MODE:${MODE}. Graphql playground: ${HOST}/graphql`
+				)
 			)
 		)
 		.catch((err: string) =>
