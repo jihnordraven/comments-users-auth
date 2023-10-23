@@ -1,6 +1,6 @@
 import { CacheModule } from '@nestjs/cache-manager'
 import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 import { memoryStore } from 'cache-manager'
 import { PrismaModule } from '../prisma/prisma.module'
 import { AuthModule } from './modules/auth/auth.module'
@@ -10,6 +10,7 @@ import { GUARDS } from './guards-handlers/guards'
 import { APP_GUARD } from '@nestjs/core'
 import { SessionsModule } from './modules/sessions/sessions.module'
 import { AppController } from './app.controller'
+import { redisStore } from 'cache-manager-redis-yet'
 
 @Module({
 	imports: [
@@ -17,9 +18,20 @@ import { AppController } from './app.controller'
 			isGlobal: true,
 			envFilePath: '.local.env'
 		}),
-		CacheModule.register({
+		CacheModule.registerAsync({
 			isGlobal: true,
-			store: memoryStore
+			imports: [ConfigModule],
+			useFactory: async (config: ConfigService) => ({
+				store: await redisStore({
+					database: config.getOrThrow<number>('REDIS_DB'),
+					password: config.getOrThrow<string>('REDIS_PASS'),
+					socket: {
+						host: config.getOrThrow<string>('REDIS_HOST'),
+						port: config.getOrThrow<number>('REDIS_PORT')
+					}
+				})
+			}),
+			inject: [ConfigService]
 		}),
 		PrismaModule,
 		AuthModule,
