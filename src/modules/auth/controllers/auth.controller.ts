@@ -31,9 +31,9 @@ export class AuthController {
 	@AUTH_SWAGGER.SwaggerToSignUp()
 	@Public()
 	@Post('signUp')
-	@HttpCode(HttpStatus.NO_CONTENT)
-	public async signUp(@Body() dto: SignUpDto): Promise<void> {
-		await this.commandBus.execute(new AC.RegisterCommand(dto))
+	@HttpCode(HttpStatus.OK)
+	public async signUp(@Body() dto: SignUpDto): Promise<Partial<User>> {
+		return this.commandBus.execute(new AC.RegisterCommand(dto))
 	}
 
 	@AUTH_SWAGGER.SwaggerToSignIn()
