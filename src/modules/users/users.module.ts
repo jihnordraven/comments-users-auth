@@ -14,7 +14,8 @@ import { GithubProfilesModule } from '../github-profiles/github-profiles.module'
 		GraphQLModule.forRoot<ApolloDriverConfig>({
 			driver: ApolloDriver,
 			typePaths: [join(process.cwd(), 'src/schema.gql')],
-			sortSchema: true
+			sortSchema: true,
+			csrfPrevention: true
 		}),
 		GoogleProfilesModule,
 		GithubProfilesModule
