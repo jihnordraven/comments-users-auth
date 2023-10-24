@@ -3,7 +3,6 @@ import { PassportStrategy } from '@nestjs/passport'
 import { User } from '@prisma/client'
 import { ExtractJwt, Strategy } from 'passport-jwt'
 import { UsersRepo } from '../../modules/users/repositories/users-repo/users.repo'
-import { Request } from 'express'
 import { CONFIG } from '../../config'
 
 export type JwtAccessPayload = {

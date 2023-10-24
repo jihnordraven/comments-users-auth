@@ -30,18 +30,27 @@ users-auth restfull | graphql api-gateway for comments-app
 
 1. Needs to have docker desktop installed on your machine
 
-## Launch rabbitmq & postgres with docker
+## Launch rabbitmq & postgres & redis with docker
 
 ```bash
 # run rabbitmq container on port:5672 (web: http://localhost:15672 (guest:guest))
-$ docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
-$ docker ps
+$ docker run -d -p 5672:5672 -p 15672:15672 --name my-rabbitmq \
+  -e RABBITMQ_DEFAULT_USER=admin \
+  -e RABBITMQ_DEFAULT_PASS=admin \
+  rabbitmq:management
+
+$ docker logs rabbitmq
 ```
 
 ```bash
-# run postgres container on port:5432 (connect: psql postgresql://guest:guest@localhost:5432)
-$ docker run -d --name postgres -p 5432:5432 -e POSTGRES_USER=guest -e POSTGRES_PASSWORD=guset postgresql
-$ docker ps
+# run postgres container on port:5432 (connect: psql postgresql://admin:admin@localhost:5432)
+$ docker run -d --name postgres -p 5432:5432 -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin postgres
+$ docker logs postgresql
+```
+
+```bash
+$ docker run -d -p 6379:6379 --name redis redis --requirepass admin
+$ docker logs redis
 ```
 
 ```bash
@@ -62,6 +71,9 @@ Install dependecies
 ```bash
 # If you don't have yarn on your machine yet
 $ npm install -g yarn
+
+# create database & push schema
+$ npx prisma db push
 
 $ yarn install
 ```
