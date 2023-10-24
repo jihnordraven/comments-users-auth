@@ -97,7 +97,7 @@ Now the application should be available on http://localhost:4200/api/v1
 Build docker image
 
 ```bash
-$ docker build -t comments-users-auth-container:latest .
+$ docker build -t comments-users-auth:latest .
 
 $ docker run -d --name comments-users-auth-container comments-users-auth:latest
 
