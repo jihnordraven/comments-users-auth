@@ -99,7 +99,17 @@ Build docker image
 ```bash
 $ docker build -t comments-users-auth:latest .
 
-$ docker start comments-users-auth:latest
+$ docker run -d --name comments-users-auth-container comments-users-auth:latest
+
+$ docker logs comments-users-auth-container:latest
+```
+
+Exec dockerize application
+
+```bash
+$ docker exec -it comments-users-auth-container:latest sh
+
+$ exit
 ```
 
 Now the application should be available on http://localhsot:4200/api/v1
