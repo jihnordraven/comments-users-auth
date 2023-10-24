@@ -10,6 +10,9 @@ import { SentryFilter } from './utils/errors-handlers'
 import { ProfilingIntegration } from '@sentry/profiling-node'
 import * as cookieParser from 'cookie-parser'
 import cookieParserVercel from 'cookie-parser'
+import * as dotenv from 'dotenv'
+
+dotenv.config()
 
 const logger: Logger = new Logger('bootstrap')
 
