@@ -30,11 +30,13 @@ users-auth restfull | graphql api-gateway for comments-app
 
 1. Needs to have docker desktop installed on your machine
 
+2. Create a new .env file -> Copy and paste copy from .local.env
+
 ## Launch rabbitmq & postgres & redis with docker
 
 ```bash
 # run rabbitmq container on port:5672 (web: http://localhost:15672 (guest:guest))
-$ docker run -d -p 5672:5672 -p 15672:15672 --name my-rabbitmq \
+$ docker run -d -p 5672:5672 -p 15672:15672 --name rabbitmq \
   -e RABBITMQ_DEFAULT_USER=admin \
   -e RABBITMQ_DEFAULT_PASS=admin \
   rabbitmq:management
@@ -45,11 +47,13 @@ $ docker logs rabbitmq
 ```bash
 # run postgres container on port:5432 (connect: psql postgresql://admin:admin@localhost:5432)
 $ docker run -d --name postgres -p 5432:5432 -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin postgres
+
 $ docker logs postgresql
 ```
 
 ```bash
 $ docker run -d -p 6379:6379 --name redis redis --requirepass admin
+
 $ docker logs redis
 ```
 

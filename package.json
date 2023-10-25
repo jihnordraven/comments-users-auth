@@ -6,6 +6,8 @@
 	"private": true,
 	"license": "UNLICENSED",
 	"scripts": {
+		"db:migrate": "npx prisma migrate dev",
+		"db:push": "npx prisma db push",
 		"postinstall": "prisma generate",
 		"migrate": "npx prisma format; npx prisma migrate dev",
 		"build": "nest build",
