@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+    microservice-users-auth:
+        image: jihnordraven/comments-users-auth:latest
+        container_name: comments-users-auth-contianer
+        ports:
+            - 4200:4200
+        environment:
+            - DATABASE_URL=postgresql://admin:admin@postgres:5432
+
+    microservice-comments:
+        image: jihnordraven/comments-comments:latest
+        container_name: comments-comments-container
+        ports:
+            - 4400:4400
+
+    microservice-files:
+        image: jihnordraven/comments-files:latest
+        container_name: comments-files
+
+    microservice-mailer:
+        image: jihnordraven/comments-mailer:latest
+        container_name: comments-mailer
+
+    postgres:
+        image: postgres:latest
+        container_name: postgres-container
+        ports:
+            - 5432:5432
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_USER: admin
+            POSTGRES_PASSWORD: admin
+
+    redis:
+        image: redis:latest
+        container_name: redis-container
+        ports:
+            - 6379:6379
+        volumes:
+            - redis-data:/data
+
+    rabbitmq:
+        image: rabbitmq:management
+        container_name: rabbitmq-container
+        ports:
+            - 5672:5672
+            - 15672:15672
+        environment:
+            RABBITMQ_DEFAULT_USER: admin
+            RABBITMQ_DEFAULT_PASS: admin
+        volumes:
+            - rabbitmq-data:/var/lib/rabbitmq
+
+volumes:
+    postgres-data:
+    redis-data:
+    rabbitmq-data:

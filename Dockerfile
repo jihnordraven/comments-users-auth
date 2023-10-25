@@ -2,7 +2,7 @@ FROM node
 
 WORKDIR /app
 
-RUN npm install -g yarn
+RUN npm install yarn
 
 COPY package*.json .
 
